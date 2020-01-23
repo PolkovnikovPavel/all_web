@@ -3,6 +3,7 @@ import os
 formats = ['Б', 'КБ', 'МБ', 'ГБ']
 dimension = 1024
 
+
 def human_read_format(size):
     format = formats[0]
 
