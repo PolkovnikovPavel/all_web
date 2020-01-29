@@ -5,7 +5,11 @@ import pygame
 import requests
 
 response = None
-map_request = "https://yandex.ru/maps/2/saint-petersburg/?from=api-maps&ll=30.128674%2C59.918158&mode=usermaps&origin=jsapi_2_1_75&um=constructor%3ApWM9zklGJOzTDlcUjCLZZ2_i7lBnvyDO&z=11.57"
+
+pls = ['29.914692%2C59.891711', '30.211905%2C59.967651',
+       '30.310309%2C59.946159', '30.316965%2C59.942636']
+
+map_request = f"http://static-maps.yandex.ru/1.x/?ll=30.045630%2C59.928810&spn=0.156,0.156&l=map&pl={','.join(pls)}"
 
 response = requests.get(map_request)
 
