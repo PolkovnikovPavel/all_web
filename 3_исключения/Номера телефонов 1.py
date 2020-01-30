@@ -6,6 +6,8 @@ def check_num(num):
     count = 0
     for s in num:
         if s == '-':
+            if num.index(s) == 0 or num.index(s) == len(num) - 1:
+                return 'error'
             count += 1
             if count == 2:
                 return 'error'
@@ -30,6 +32,9 @@ def check_num(num):
             result += s
     if result[0] != '+':
         result = '+7' + result[1:]
+
+    if len(result) != 12:
+        return 'error'
 
     return result
 
