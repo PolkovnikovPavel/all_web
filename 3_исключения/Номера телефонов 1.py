@@ -25,10 +25,13 @@ def check_num(num):
 
     bed_symbols = ['-', '(', ')']
     result = ''
-    for s in num[1:]:
+    for s in num:
         if s not in bed_symbols:
             result += s
-    return '+7' + result
+    if result[0] != '+':
+        result = '+7' + result[1:]
+
+    return result
 
 
 print(check_num(input()))
