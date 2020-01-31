@@ -2,13 +2,6 @@ class num_Exception(Exception):
     pass
 
 
-codes = [(910, 919), (980, 989), (920, 939), (902, 906), (960, 969)]
-
-operator_codes = []
-for code in codes:
-    operator_codes.extend(range(code[0], code[1] + 1))
-
-
 def check_num(num):
     num = ''.join(num.split())
     if num[0] != '8' and num[:2] != '+7':
@@ -48,10 +41,6 @@ def check_num(num):
 
     if not result[1:].isdigit():
         raise num_Exception('неверный формат')
-
-    if int(result[2:5]) not in operator_codes:
-        raise num_Exception('не определяется оператор сотовой связи')
-
     if len(result) != 12:
         raise num_Exception('неверное количество цифр')
 

@@ -49,6 +49,3 @@ try:
     print(check_num(input()))
 except num_Exception as exc:
     print('error')
-#except Exception as exc:
-#    print(f'не известная ошибка: {exc}')
-
