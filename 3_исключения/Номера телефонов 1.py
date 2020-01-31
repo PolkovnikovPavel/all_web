@@ -24,6 +24,8 @@ def check_num(num):
             count -= 1
             if count < 0:
                 return 'error'
+    if count != 0:
+        return 'error'
 
     bed_symbols = ['-', '(', ')']
     result = ''
