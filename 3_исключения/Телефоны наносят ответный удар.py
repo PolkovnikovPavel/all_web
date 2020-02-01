@@ -49,11 +49,11 @@ def check_num(num):
     if not result[1:].isdigit():
         raise num_Exception('неверный формат')
 
-    if int(result[2:5]) not in operator_codes:
-        raise num_Exception('не определяется оператор сотовой связи')
-
     if len(result) != 12:
         raise num_Exception('неверное количество цифр')
+
+    if int(result[2:5]) not in operator_codes:
+        raise num_Exception('не определяется оператор сотовой связи')
 
     return result
 
