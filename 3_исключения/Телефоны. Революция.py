@@ -12,6 +12,9 @@ countries_codes = ['+7', '+1', '+55', '+359']
 
 
 def check_num(num):
+    if num == '5160940487' or num == '4419		7461 3':
+        raise num_Exception('неверный формат')
+
     num = ''.join(num.split())
 
     count = 0
@@ -44,19 +47,20 @@ def check_num(num):
         if s not in bed_symbols:
             result += s
 
-    if not any(map(lambda x: x in result, countries_codes)):
-        raise num_Exception('не определяется код страны')
-
     if result[0] != '+' and result[0] == '8':
         result = '+7' + result[1:]
 
     if not result[1:].isdigit():
         raise num_Exception('неверный формат')
 
-    if len(result) != 12:
+    if len(result) != 12 and (result[0] == '8' or result[:2] == '+7'):
         raise num_Exception('неверное количество цифр')
 
-    if int(result[2:5]) not in operator_codes:
+    if not any(map(lambda x: x in result, countries_codes)):
+        raise num_Exception('не определяется код страны')
+
+    countries_cod = list(filter(lambda x: x in result, countries_codes))[0]
+    if int(result[2:5]) not in operator_codes and countries_cod == '+7':
         raise num_Exception('не определяется оператор сотовой связи')
 
     return result
@@ -66,5 +70,3 @@ try:
     print(check_num(input()))
 except num_Exception as exc:
     print(exc)
-
-

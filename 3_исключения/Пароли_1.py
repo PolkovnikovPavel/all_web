@@ -10,9 +10,9 @@ combination = ['йцу', 'цук', 'уке', 'кен', 'енг', 'нгш', 'гш
                'qwe', 'wer', 'ert', 'rty', 'tyu', 'yui', 'uio', 'iop',
                'asd', 'sdf', 'dfg', 'fgh', 'ghj', 'hjk', 'jkl',
                'zxc', 'xcv', 'cvb', 'vbn', 'bnm',
-               'qwd', 'wdf', 'dfk', 'fkj', 'kju', 'jur', 'url',
-               'ase', 'set', 'etg', 'tgy', 'gyn', 'yni', 'nio', 'ioh',
-               'zxc', 'xcv', 'cvb', 'vbp', 'bpm']
+               'qze', 'zer',
+               'qsd', 'klm',
+               'wxc', 'жcъ']
 
 
 def check_password(pas):
