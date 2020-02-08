@@ -6,8 +6,6 @@ import schedule
 start_day = datetime.datetime.today().day
 last_hour = datetime.datetime.today().hour
 
-sys.argv = ['ierjf.py', 'куууу ку', '00-08']
-
 phrase = sys.argv[1]
 range = list(map(int, sys.argv[2].split('-')))
 
