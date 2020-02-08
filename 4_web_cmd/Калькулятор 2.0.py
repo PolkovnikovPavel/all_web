@@ -12,4 +12,4 @@ try:
 except IndexError:
     print('NO PARAMS')
 except Exception as e:
-    print(e)
+    print(e.__class__.__name__)
