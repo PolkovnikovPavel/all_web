@@ -4,7 +4,6 @@ import sys
 import pygame
 import requests
 
-response = None
 map_request = "http://static-maps.yandex.ru/1.x/?ll=37.618631%2C55.755004&spn=0.002,0.002&l=map"
 response = requests.get(map_request)
 
