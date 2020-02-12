@@ -12,6 +12,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     message = ' '.join(args.message)
 
-    print(message)
     print('Welcome to my program')
     print_error(message)
