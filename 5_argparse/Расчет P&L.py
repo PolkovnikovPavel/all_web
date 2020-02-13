@@ -1,7 +1,6 @@
 import argparse
 
-
-COUNT = {'year': 360, 'week':7, 'month':30, 'day':1}
+COUNT = {'year': 360, 'week': 7, 'month': 30, 'day': 1}
 
 
 def convert_from_day_to(num, type):
