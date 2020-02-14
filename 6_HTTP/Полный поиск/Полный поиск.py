@@ -24,11 +24,14 @@ def get_params_for_static_maps(json_response):
     toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
 
     w, h = get_with_height_object(json_response)
+    point = toponym['Point']['pos']
 
     map_params = {
         "ll": ",".join([toponym_longitude, toponym_lattitude]),
         "spn": ",".join([str(w), str(h)]),
-        "l": "map"}
+        "l": "map",
+        'pt': ','.join(point.split())}
+
     return map_params
 
 
