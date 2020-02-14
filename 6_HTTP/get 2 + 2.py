@@ -14,10 +14,11 @@ params = {
 response = requests.get(url, params=params)
 json_response = response.json()
 
+
 result = json_response['result']
 key = json_response['check']
 
 result.sort()
 
-print(' '.join(result))
+print(result[0], result[1])
 print(key)
