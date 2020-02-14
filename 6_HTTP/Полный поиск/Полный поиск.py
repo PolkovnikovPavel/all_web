@@ -5,21 +5,34 @@ import requests
 from PIL import Image
 
 
+def get_with_height_object(json_response):
+    toponym = json_response["response"]["GeoObjectCollection"][
+        "featureMember"][0]["GeoObject"]
+
+    upper = toponym['boundedBy']['Envelope']['upperCorner'].split()
+    point = toponym['Point']['pos'].split()
+
+    w = abs(float(upper[0]) - float(point[0]))
+    h = abs(float(upper[1]) - float(point[1]))
+    return w, h
+
+
 def get_params_for_static_maps(json_response):
     toponym = json_response["response"]["GeoObjectCollection"][
         "featureMember"][0]["GeoObject"]
     toponym_coodrinates = toponym["Point"]["pos"]
     toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
-    delta = "0.005"
+
+    w, h = get_with_height_object(json_response)
 
     map_params = {
         "ll": ",".join([toponym_longitude, toponym_lattitude]),
-        "spn": ",".join([delta, delta]),
+        "spn": ",".join([str(w), str(h)]),
         "l": "map"}
     return map_params
 
 
-toponym_to_find = 'Москва, ул. Ак. Королева, 12'
+toponym_to_find = " ".join(sys.argv[1:])
 
 geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
 geocoder_params = {
