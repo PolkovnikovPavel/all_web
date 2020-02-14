@@ -1,8 +1,28 @@
 import sys
+import math
 from io import BytesIO
 
 import requests
 from PIL import Image
+
+
+def lonlat_distance(a, b):
+    degree_to_meters_factor = 111 * 1000 # 111 километров в метрах
+    a_lon, a_lat = a
+    b_lon, b_lat = b
+
+    # Берем среднюю по широте точку и считаем коэффициент для нее.
+    radians_lattitude = math.radians((a_lat + b_lat) / 2.)
+    lat_lon_factor = math.cos(radians_lattitude)
+
+    # Вычисляем смещения в метрах по вертикали и горизонтали.
+    dx = abs(a_lon - b_lon) * degree_to_meters_factor * lat_lon_factor
+    dy = abs(a_lat - b_lat) * degree_to_meters_factor
+
+    # Вычисляем расстояние между точками.
+    distance = math.sqrt(dx * dx + dy * dy)
+
+    return distance
 
 
 def get_params_for_static_maps_and_organization(json_response, start_point):
@@ -25,8 +45,8 @@ def get_data_of_organization(organization):
     name = organization['properties']['name']
     address = organization['properties']['description']
     time_of_work = organization['properties']['CompanyMetaData']['Hours']['text']
-    distance = int(((abs(start_point[0] - org_point[0]) ** 2 + abs(
-        start_point[1] - org_point[1]) ** 2) ** 0.5) * 68388)
+
+    distance = int(lonlat_distance(start_point, org_point))
 
     text.append(f'Название: {name}')
     text.append(f'Адрес: {address}')
