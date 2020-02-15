@@ -1,1 +1,1 @@
-http://static-maps.yandex.ru/1.x/?ll=37.618631%2C55.755004&spn=0.002,0.002&l=map
+https://github.com/PolkovnikovPavel/all_web/tree/master/2_API/%D0%A1%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE%20%D0%B8%D0%B4%D1%82%D0%B8%20%D0%B4%D0%BE%20%D1%88%D0%BA%D0%BE%D0%BB%D1%8B

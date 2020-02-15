@@ -1,4 +1,4 @@
-from distance import lonlat_distance
+from .distance import lonlat_distance
 import requests
 
 
