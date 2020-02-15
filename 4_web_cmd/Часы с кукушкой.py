@@ -7,14 +7,14 @@ last_hour = datetime.datetime.today().hour
 
 def job():
     global last_hour
-    if last_hour != datetime.datetime.today().hour:
-        print('Ку')
-        last_hour = datetime.datetime.today().hour
+    if start_day == datetime.datetime.today().day:
+        if last_hour != datetime.datetime.today().hour:
+            print('Ку')
+            last_hour = datetime.datetime.today().hour
 
 
 schedule.every(1).seconds.do(job)
+schedule.run_pending()
 
-
-while datetime.datetime.today().day == start_day:
+while True:
     schedule.run_pending()
-
