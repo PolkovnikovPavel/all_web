@@ -1,26 +1,17 @@
 import os
-
-formats = ['Б', 'КБ', 'МБ', 'ГБ']
-dimension = 1024
-
-def human_read_format(size):
-    format = formats[0]
-
-    while size // dimension >= 1 and format != formats[-1]:
-        format = formats[formats.index(format) + 1]
-        size /= dimension
-    return f'{round(size)}{format}'
+import time
+from zipfile import ZipFile
 
 
-def get_ﬁles_sizes():
-    all_files = os.listdir()
-    result = []
-    for file in all_files:
-        size = os.path.getsize(file)
-        size = human_read_format(size)
-        result.append(f'{file} {size}')
-    return '\n'.join(result)
-
-
-if __name__ == '__main__':
-    print(get_ﬁles_sizes())
+def make_reserve_arc(source, dest):
+    dest = time.strftime(f'{dest} %d.%m.%Y  %H-%M-%S')
+    os.mkdir(dest)
+    with ZipFile(source) as myzip:
+        for name in myzip.namelist():
+            if '.' in name:
+                file = myzip.open(name)
+                text = file.read()
+                with open(f'{dest}/{name}', 'wb') as file:
+                    file.write(text)
+            else:
+                os.mkdir(f'{dest}/{name[:-1]}')
