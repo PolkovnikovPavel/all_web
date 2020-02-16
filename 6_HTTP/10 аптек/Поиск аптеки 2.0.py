@@ -1,4 +1,3 @@
-import sys
 from io import BytesIO
 from distance import lonlat_distance
 
@@ -7,15 +6,22 @@ from PIL import Image
 
 
 def get_params_for_static_maps_and_organization(json_response, start_point):
-    organization = json_response["features"][0]
-    point = organization["geometry"]["coordinates"]
-    org_point = "{0},{1}".format(point[0], point[1])
+    organizations = json_response["features"]
+    point = organizations["geometry"]["coordinates"]
+    grin_point = []
+    blue_point = []
+    grey_point = []
+
+    for organization in organizations:
+        point = organization["geometry"]["coordinates"]
+        org_point = "{0},{1}".format(point[0], point[1])
+
 
     map_params = {
         "l": "map",
         'pt': f'{start_point},pm2al~{org_point},pm2bl'}
 
-    return map_params, organization
+    return map_params
 
 
 def get_data_of_organization(organization):
@@ -36,7 +42,7 @@ def get_data_of_organization(organization):
     return '\n'.join(text)
 
 
-toponym_to_find = " ".join(sys.argv[1:])
+toponym_to_find = 'Кемерово Дружбы 27А'
 
 geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
 geocoder_params = {
@@ -66,12 +72,10 @@ search_params = {
 
 response = requests.get(search_api_server, params=search_params)
 json_response = response.json()
-map_params, organization = get_params_for_static_maps_and_organization(
+map_params = get_params_for_static_maps_and_organization(
                                                     json_response, address_ll)
 
 map_api_server = "http://static-maps.yandex.ru/1.x/"
 response = requests.get(map_api_server, params=map_params)
 
-
-print(get_data_of_organization(organization))
 Image.open(BytesIO(response.content)).show()
