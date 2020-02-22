@@ -1,45 +1,24 @@
+import datetime
 import sys
 
+import schedule
 
-def parsing(commands):
-    global file_name, num, count, sort
-    sort = False
-    num = False
-    count = False
+start_day = datetime.datetime.today().day
+last_hour = datetime.datetime.today().hour
 
-    if '--sort' in commands:
-        sort = True
-    if '--num' in commands:
-        num = True
-    if '--count' in commands:
-        count = True
-    for command in commands:
-        if '--' not in command:
-            file_name = command
+phrase = sys.argv[1]
+range = list(map(int, sys.argv[2].split('-')))
 
 
-parsing(sys.argv[1:])
+def job():
+    global last_hour
+    hour_now = datetime.datetime.today().hour
+    if last_hour != hour_now and (hour_now < range[0] or hour_now > range[1]):
+        print(phrase)
+        last_hour = hour_now
 
-try:
-    with open(file_name) as file:
-        text = file.read()
-    if sort:
-        strings = text.split('\n')
-        strings.sort()
-        text = '\n'.join(strings)
 
-    if num:
-        strings = text.split('\n')
-        text = []
-        for i in range(len(strings)):
-            text.append(f'{i} {strings[i]}')
-        text = '\n'.join(text)
+schedule.every(1).seconds.do(job)
 
-    if count:
-        count = len(text.split('\n'))
-        text += f'\nrows count: {count}'
-
-    print(text)
-
-except Exception:
-    print('ERROR')
+while datetime.datetime.today().day == start_day:
+    schedule.run_pending()
