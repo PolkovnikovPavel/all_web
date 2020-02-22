@@ -1,4 +1,3 @@
-import sys
 from io import BytesIO
 from distance import lonlat_distance
 
@@ -7,15 +6,47 @@ from PIL import Image
 
 
 def get_params_for_static_maps_and_organization(json_response, start_point):
-    organization = json_response["features"][0]
-    point = organization["geometry"]["coordinates"]
-    org_point = "{0},{1}".format(point[0], point[1])
+    organizations = json_response["features"]
+    grin_point = []
+    blue_point = []
+    grey_point = []
+
+    for i in range(10):
+        organization = organizations[i]
+        point = organization["geometry"]["coordinates"]
+        org_point = "{0},{1}".format(point[0], point[1])
+
+        Availabilities = organization['properties']['CompanyMetaData'][
+            'Hours']['Availabilities'][0]
+
+        if 'TwentyFourHours' in Availabilities:
+            grin_point.append(org_point)
+        elif 'TwentyFourHours' not in Availabilities:
+            blue_point.append(org_point)
+        else:
+            grey_point.append(org_point)
+
+    grin_text = ",pm2gnm~".join(grin_point)
+    if len(grin_point) > 0:
+        grin_text += ',pm2gnm'
+    if len(blue_point) > 0 and len(grin_point) > 0:
+        grin_text += '~'
+
+    blue_text = ",pm2blm~".join(blue_point)
+    if len(blue_point) > 0:
+        blue_text += ',pm2blm'
+    if len(grey_point) > 0 and len(blue_point) > 0:
+        blue_text += '~'
+
+    grey_text = ",pm2grm~".join(grey_point)
+    if len(grey_point) > 0:
+        grey_text += ',pm2grm'
 
     map_params = {
         "l": "map",
-        'pt': f'{start_point},pm2al~{org_point},pm2bl'}
+        'pt': f'{grin_text}{blue_text}{grey_text}'}
 
-    return map_params, organization
+    return map_params
 
 
 def get_data_of_organization(organization):
@@ -36,7 +67,8 @@ def get_data_of_organization(organization):
     return '\n'.join(text)
 
 
-toponym_to_find = " ".join(sys.argv[1:])
+# toponym_to_find = " ".join(sys.argv[1:])
+toponym_to_find = 'Кемерово Радищева 6'
 
 geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
 geocoder_params = {
@@ -61,17 +93,16 @@ search_params = {
     "text": "аптека",
     "lang": "ru_RU",
     "ll": address_ll,
-    "type": "biz"
+    "type": "biz",
+    "results": 50
 }
 
 response = requests.get(search_api_server, params=search_params)
 json_response = response.json()
-map_params, organization = get_params_for_static_maps_and_organization(
+map_params = get_params_for_static_maps_and_organization(
                                                     json_response, address_ll)
 
 map_api_server = "http://static-maps.yandex.ru/1.x/"
 response = requests.get(map_api_server, params=map_params)
 
-
-print(get_data_of_organization(organization))
 Image.open(BytesIO(response.content)).show()
