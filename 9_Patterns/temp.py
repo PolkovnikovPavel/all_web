@@ -4,10 +4,13 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+
 @app.route('/<title>')
 @app.route('/index/<title>')
-def login(title):
-    return render_template('base.html', title=title)
+def home(title):
+    user = "Ученик Яндекс.Лицея"
+    return render_template('base.html', title=title,
+                           username=user)
 
 
 if __name__ == '__main__':
