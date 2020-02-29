@@ -69,7 +69,7 @@ def auto_answer():
                                           <option>начальное</option>
                                           <option>среднее</option>
                                           <option>высшее</option>
-                                          <option>профисиональное</option>
+                                          <option>профессиональное</option>
                                         </select>
                                      </div>
                                     <label for="classSelect"></label>
