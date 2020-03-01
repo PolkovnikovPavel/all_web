@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="margin-left: 40px"><img src="{{path_to_emblem}}"> Аварийный доступ</h1>
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p style="margin-left: 40px">
+        {{ form.username_1.label }}<br>
+        {{ form.username_1(class="form-control") }}<br>
+        {% for error in form.username_1.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+
+    <p style="margin-left: 40px">
+        {{ form.password_1.label }}<br>
+        {{ form.password_1(class="form-control", type="password") }}<br>
+        {% for error in form.password_1.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+
+    <p style="margin-left: 40px">
+        {{ form.username_2.label }}<br>
+        {{ form.username_2(class="form-control") }}<br>
+        {% for error in form.username_2.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+
+    <p style="margin-left: 40px">
+        {{ form.password_2.label }}<br>
+        {{ form.password_2(class="form-control", type="password") }}<br>
+        {% for error in form.password_2.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+
+    <p style="margin-left: 40px">{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
+{% endblock %}
