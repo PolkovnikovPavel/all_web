@@ -27,21 +27,19 @@ def main():
     session = db_session.create_session()
 
     user = User()
-    user.surname = "Scott"
-    user.name = "Ridley"
-    user.age = 21
-    user.position = "captain"
-    user.speciality = "research engineer"
-    user.address = "module_1"
-    user.email = "scott_chief@mars.org"
-    user.hashed_password = "cap"
+    user.surname = "Brish"
+    user.name = "Alex"
+    user.age = 38
+    user.position = "mechanic"
+    user.speciality = "mechanic"
+    user.address = "module_2"
+    user.email = "AlexBrish@mars.org"
+    user.hashed_password = "22568952556684114"
     session.add(user)
 
     session.commit()
 
-
-
-    #app.run(port=8080, host='127.0.0.1')
+    # app.run(port=8080, host='127.0.0.1')
 
 
 @app.route('/register', methods=['GET', 'POST'])
