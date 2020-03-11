@@ -52,7 +52,7 @@ def load_user(user_id):
 def main():
     db_session.global_init("db/blogs.sqlite")
 
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='192.168.0.15')
 
 
 @app.route("/")
