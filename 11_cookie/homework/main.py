@@ -78,7 +78,7 @@ def index():
 def jobs_delete(id):
     session = db_session.create_session()
     jobs = session.query(Jobs).filter(Jobs.id == id,
-                        (Jobs.creator == current_user.id | current_user.id == 1)).first()
+                        ((Jobs.creator == current_user.id) | (current_user.id == 1))).first()
     if jobs:
         session.delete(jobs)
         session.commit()
