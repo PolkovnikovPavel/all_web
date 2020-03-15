@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, abort
+from flask import Flask, render_template, redirect, request, abort, jsonify, make_response
 from data import db_session
 from data.users import User
 from data.Jobs import Jobs
@@ -60,6 +60,11 @@ def load_user(user_id):
     return session.query(User).get(user_id)
 
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
 def main():
     db_session.global_init("db/mars_explorer.sqlite")
     app.register_blueprint(jobs_api.blueprint)
@@ -80,7 +85,7 @@ def index():
 def jobs_delete(id):
     session = db_session.create_session()
     jobs = session.query(Jobs).filter(Jobs.id == id,
-                        (Jobs.creator == current_user.id | current_user.id == 1)).first()
+                        ((Jobs.creator == current_user.id) | (current_user.id == 1))).first()
     if jobs:
         session.delete(jobs)
         session.commit()
@@ -107,6 +112,12 @@ def edit_jobs(id):
             abort(404)
     if form.validate_on_submit():
         session = db_session.create_session()
+
+        if not session.query(User).filter(User.id == int(form.team_leader.data)).first():
+            return render_template('jobs.html', title='Редактирование работы',
+                                   form=form,
+                                   message='несуществующий id коммандира')
+
         job = session.query(Jobs).filter(Jobs.id == id,
                     ((Jobs.creator == current_user.id) | (current_user.id == 1))).first()
         if job:
