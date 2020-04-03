@@ -31,7 +31,11 @@ for event in longpoll.listen():
             print('Для меня от:', response)
 
             print('Текст:', event.text)
-            str = f"Павел Полковников крутой, а {response[0]['first_name']} {response[0]['last_name']} лох какой-то"
+            str = f"{response[0]['first_name']} {response[0]['last_name']} это вы? Я про вас всё знаю!! ахахаха!!!"
+            if event.text.lower() == 'нет':
+                str = 'Не ври'
+            elif event.text.lower() == 'ладно':
+                str = 'Я же говорил НЕ ПИСАТь'
             vk.messages.send(user_id=event.user_id,
                              message=str,
                              random_id=random.randint(0, 2 ** 64))
