@@ -12,7 +12,7 @@ def write_msg(user_id, message):
 
 
 week   = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница',  'суббота', 'воскресенье']
-token = "dae89ed236d52913daf61830694636678d54ac9db4827bc1c9b0b65edab9af1bf0e5ea94b018735b0887d"
+token = "TOKEN"
 # Авторизуемся как сообщество
 vk_session = vk_api.VkApi(token=token)
 

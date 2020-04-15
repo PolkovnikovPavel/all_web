@@ -10,9 +10,7 @@ def main():
         print(error_msg)
         return
     vk = vk_session.get_api()
-    # Используем метод wall.get
-
-    response = vk.photos.get(album_id='271455451', group_id='193732812')
+    response = vk.photos.get(album_id='твой id альбома', group_id='твой id группы')
     for item in response['items']:
         size = item['sizes'][-1]
         print(f'url: {size["url"]} size: {size["width"]}x{size["height"]}')

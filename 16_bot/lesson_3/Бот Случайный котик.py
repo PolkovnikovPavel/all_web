@@ -15,11 +15,11 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    if 'кот' in message.content:
+    if 'кот' in message.content.lower():
         answer = requests.get('https://api.thecatapi.com/v1/images/search').text
         img = json.loads(answer)
         await message.channel.send(img[0]['url'])
-    elif 'соба' in message.content:
+    elif 'соба' in message.content.lower():
         answer = requests.get('https://dog.ceo/api/breeds/image/random').text
         img = json.loads(answer)
         await message.channel.send(img['message'])
