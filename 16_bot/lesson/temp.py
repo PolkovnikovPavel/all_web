@@ -20,7 +20,7 @@ def main():
 
     print(photo, vk_photo_id, sep="\n")
     vk = vk_session.get_api()
-    vk.wall.post(message="Test", attachments=[vk_photo_id])
+    #vk.wall.post(message="Test", attachments=[vk_photo_id])
 
 
 

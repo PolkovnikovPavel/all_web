@@ -1,19 +1,38 @@
-import discord
-import random
-from discord.ext import commands
+import pymorphy2
+import sys
 
-TOKEN = "Njk5NjUyNzcyODk4Nzk5Nzc2.XpXi7w.ysa68ThkipSULRZ0kMB8PSkanbo"
+morph = pymorphy2.MorphAnalyzer()
 
+text = sys.stdin.read()
+ru_letters = set('ёйцукенгшщзхъфывапролджэячсмитьбю \n')
+words = ''.join(i for i in text.lower() if i in ru_letters).split()
 
-bot = commands.Bot(command_prefix='')
-dashes = ['\u2680', '\u2681', '\u2682', '\u2683', '\u2684', '\u2685']
+for word in words:
+    tag = str(morph.parse(word.strip())[0].tag).split(',')[2].split()
+    if 'NOUN' in morph.parse(word.strip())[0].tag:
+        if 'anim' in morph.parse(word.strip())[0].tag:
+            if len(tag) == 1:
+                print(morph.parse('Живое')[0].inflect(
+                    {tag[0], 'sing'}).word.capitalize())
 
+            elif len(tag) != 1 and tag[1] != 'plur':
+                print(morph.parse('Живое')[0].inflect(
+                    {tag[0], 'sing'}).word.capitalize())
 
+            else:
+                print(morph.parse('Живое')[0].inflect(
+                    {'plur'}).word.capitalize())
 
-@bot.command(name='randint')
-async def my_randint(ctx, min_int, max_int):
-    num = random.randint(int(min_int), int(max_int))
-    await ctx.send(num)
+        else:
+            if len(tag) == 1:
+                print('Не ' + morph.parse('Живое')[0].inflect(
+                    {tag[0], 'sing'}).word)
 
+            elif tag[1] != 'plur':
+                print('Не ' + morph.parse('Живое')[0].inflect(
+                    {tag[0], 'sing'}).word)
 
-bot.run(TOKEN)
+            else:
+                print('Не ' + morph.parse('Живое')[0].inflect({'plur'}).word)
+    else:
+        print('Не существительное')
