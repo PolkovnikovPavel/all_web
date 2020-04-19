@@ -1,8 +1,6 @@
 from telegram.ext import Updater, MessageHandler, Filters
-from telegram.ext import CallbackContext, CommandHandler
+from telegram.ext import CommandHandler
 from telegram import ReplyKeyboardMarkup
-from telegram import ReplyKeyboardRemove
-import random
 
 
 mapp = [[2, 3],
@@ -73,11 +71,11 @@ def made_step(update, context):
 
 
 def main():
-    updater = Updater('912680602:AAFuJ7VF3CuxO2_giada4gqGP_dwfLqkp5c', use_context=True)
+    updater = Updater('token', use_context=True)
     dp = updater.dispatcher
 
-    dp.add_handler(CommandHandler("inlet", start))
-    dp.add_handler(CommandHandler("exit", made_exit))
+    dp.add_handler(CommandHandler("inlet", start))   # вход
+    dp.add_handler(CommandHandler("exit", made_exit))   # выход
 
     dp.add_handler(MessageHandler(Filters.text, made_step))
 
