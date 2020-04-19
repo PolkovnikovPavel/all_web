@@ -1,8 +1,6 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 
-import time
-
 
 def set_timer(update, context):
     chat_id = update.message.chat_id
@@ -17,6 +15,7 @@ def set_timer(update, context):
             old_job = context.chat_data['job']
             old_job.schedule_removal()
         new_job = context.job_queue.run_once(task, due, context=chat_id)
+
         context.chat_data['job'] = new_job
         update.message.reply_text(f'Вернусь через {due} секунд')
 
@@ -27,16 +26,6 @@ def set_timer(update, context):
 def task(context):
     job = context.job
     context.bot.send_message(job.context, text='Вернулся!')
-
-
-def get_time(update, context):
-    t = time.gmtime()
-    update.message.reply_text(f'{t.tm_hour}-{t.tm_min}-{t.tm_sec}')
-
-
-def get_date(update, context):
-    t = time.gmtime()
-    update.message.reply_text(f'{t.tm_mday}.{t.tm_mon}.{t.tm_year}')
 
 
 def unset_timer(update, context):
@@ -51,7 +40,7 @@ def unset_timer(update, context):
 
 
 def main():
-    updater = Updater('912680602:AAFuJ7VF3CuxO2_giada4gqGP_dwfLqkp5c', use_context=True)
+    updater = Updater('token', use_context=True)
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("set", set_timer,
@@ -60,8 +49,6 @@ def main():
                                   pass_chat_data=True))
     dp.add_handler(CommandHandler("unset", unset_timer,
                                   pass_chat_data=True))
-    dp.add_handler(CommandHandler("time", get_time))
-    dp.add_handler(CommandHandler("date", get_date))
 
     updater.start_polling()
     updater.idle()

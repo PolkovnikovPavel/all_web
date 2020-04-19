@@ -11,11 +11,11 @@ def main():
     updater.start_polling()
 
     dp = updater.dispatcher
+
     text_handler = MessageHandler(Filters.text, echo)
-
     dp.add_handler(text_handler)
-    updater.start_polling()
 
+    updater.start_polling()
     updater.idle()
 
 

@@ -1,7 +1,6 @@
 from telegram.ext import Updater, MessageHandler, Filters
-from telegram.ext import CallbackContext, CommandHandler
+from telegram.ext import CommandHandler
 from telegram import ReplyKeyboardMarkup
-from telegram import ReplyKeyboardRemove
 import random
 
 
@@ -75,7 +74,7 @@ def text_commands(update, context):
 
 
 def main():
-    updater = Updater('912680602:AAFuJ7VF3CuxO2_giada4gqGP_dwfLqkp5c', use_context=True)
+    updater = Updater('token', use_context=True)
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
